@@ -11,10 +11,11 @@ fn main() {
         my_led.set_direction(Direction::Low)?;
         loop {
             my_led.set_value(0).expect("nope, no zero for you!");
-
-            sleep(Duration::from_millis(200));
+            println!("On");
+            sleep(Duration::from_millis(1000));
             my_led.set_value(1).expect("and no again!");
-            sleep(Duration::from_millis(200));
+            println!("Off");
+            sleep(Duration::from_millis(1000));
         }
     }).expect("can't export my led.");
 }
