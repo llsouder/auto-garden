@@ -6,3 +6,6 @@ edition = "2018"
 
 [dependencies]
 sysfs_gpio = "0.5.3"
+rocket = "0.4.0"
+rocket_contrib = "0.4.0"
+ws = "0.7.9"
