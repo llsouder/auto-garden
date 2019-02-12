@@ -10,11 +10,27 @@ use rocket::State;
 use rocket_contrib::serve::StaticFiles;
 use std::thread::sleep;
 use std::thread::spawn;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 use sysfs_gpio::{Direction, Pin};
 
 struct Gpio {
+    led: Pin,
     sensor: Pin,
+    led_status: AtomicBool,
+}
+
+#[get("/toggle_led")]
+fn toggle_led(gpio: State<Gpio>) {
+    if gpio.led_status.load(Ordering::Relaxed) {
+        println!("Turn LED Off");
+        gpio.led.set_value(0).unwrap();
+        gpio.led_status.store(false, Ordering::Relaxed);
+    } else {
+        println!("Turn LED On");
+        gpio.led.set_value(1).unwrap();
+        gpio.led_status.store(true, Ordering::Relaxed);
+    }
 }
 
 #[get("/get_status")]
@@ -38,9 +54,17 @@ fn main() {
             println!("Peer {} got message: {}", "Happy", msg);
             Ok(())
         }
-    })
-    .unwrap();
-   let my_sensor = Pin::new(21);
+    }).unwrap();
+
+    let my_led = Pin::new(20);
+    my_led
+        .export()
+        .expect("Cannot access GPIO! LED export failed");
+    my_led
+        .set_direction(Direction::Low)
+        .expect("fail set dir");
+
+    let my_sensor = Pin::new(21);
     my_sensor
         .export()
         .expect("Cannot access GPIO! sensor export failed");
@@ -64,7 +88,10 @@ fn main() {
     rocket::ignite()
         .mount("/", StaticFiles::from("static"))
         .mount("/", routes![get_status])
+        .mount("/", routes![toggle_led])
         .manage(Gpio {
+            led: my_led,
+            led_status: AtomicBool::new(false),
             sensor: my_sensor,
         })
         .launch();
