@@ -76,16 +76,14 @@ fn main() {
     let broadcaster = me.broadcaster();
 
     // Setup thread for listening to stdin and sending messages to connections
-    let mut alternate = "Lights On";
+    let mut previous_status = "";
     let input = spawn(move || loop {
-        //broadcaster.send(light_status(my_sensor)).unwrap();
-        broadcaster.send(alternate).unwrap();
-        if alternate.contains("On") {
-            alternate = "Lights Off";
-        } else {
-            alternate = "Lights On";
+        let status =  light_status(my_sensor);
+        if status!= previous_status {
+            broadcaster.send(status).unwrap();
+            previous_status = status;
         }
-        sleep(Duration::from_millis(3000));
+        sleep(Duration::from_millis(250));
     });
 
     spawn(move || {
