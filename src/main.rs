@@ -59,34 +59,37 @@ fn light_status(sensor: Pin) -> &'static str {
 fn main() {
     db::setup_db(&get_connection()).expect("Cannot setup database.");
 
-    let me = ws::WebSocket::new(|_| {
+    let my_led = Pin::new(20);
+    my_led
+        .export()
+        .expect("Cannot access GPIO! LED export failed");
+    my_led
+        .set_direction(Direction::Low)
+        .expect("fail set dir");
+
+    let my_sensor = Pin::new(21);
+    my_sensor
+        .export()
+        .expect("Cannot access GPIO! sensor export failed");
+    my_sensor
+        .set_direction(Direction::In)
+        .expect("fail set dir");
+
+    let web_socket = ws::WebSocket::new(|_| {
         move |msg| {
             println!("Peer {} got message: {}", "Happy", msg);
             Ok(())
         }
     }).unwrap();
-    let my_led = Pin::new(20);
-    my_led
-        .export()
-        .expect("Cannot access GPIO! LED export failed");
-
-    my_led
-        .set_direction(Direction::Low)
-        .expect("fail set dir");
-    let my_sensor = Pin::new(21);
-    my_sensor
-        .export()
-        .expect("Cannot access GPIO! sensor export failed");
-
-    my_sensor
-        .set_direction(Direction::In)
-        .expect("fail set dir");
     // Get a sender for ALL connections to the websocket
 
-    let broadcaster = me.broadcaster();
     // Setup thread for listening to stdin and sending messages to connections
-    let mut previous_status = "";
+    spawn(move || {
+        web_socket.listen("0.0.0.0:3012").unwrap();
+    });
 
+    let broadcaster = web_socket.broadcaster();
+    let mut previous_status = "";
     let input = spawn(move || loop {
         let status = light_status(my_sensor);
         if status != previous_status {
@@ -96,10 +99,6 @@ fn main() {
             previous_status = status;
         }
         sleep(Duration::from_millis(250));
-    });
-
-    spawn(move || {
-        me.listen("0.0.0.0:3012").unwrap();
     });
     rocket::ignite()
         .mount("/", StaticFiles::from("static"))
