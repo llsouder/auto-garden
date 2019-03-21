@@ -16,8 +16,7 @@ function update_light_indicator(signal_text) {
         }
     }
  }
-    //server will send light status every 3s
-    var ws = new WebSocket("ws://" + location.hostname + ":3012");
+    var ws = new WebSocket("ws://" + location.hostname);
     ws.onmessage = function (evt) {
      update_light_indicator(evt.data);
     }
