@@ -16,16 +16,25 @@ function update_light_indicator(signal_text) {
         }
     }
  }
-    var ws = new WebSocket("ws://" + location.hostname);
-    ws.onmessage = function (evt) {
-     update_light_indicator(evt.data);
-    }
-    const Http = new XMLHttpRequest();
-    Http.onreadystatechange=(e)=>{
-    console.log("onreadystatechange" + e);
-      update_light_indicator(Http.responseText);
-    }
-    //return a one time light status
-    const url="http://" + location.host + "/get_status";
-    Http.open("GET", url);
-    Http.send();
+
+ const Http = new XMLHttpRequest();
+ Http.onreadystatechange=(e)=>{
+   console.log("onreadystatechange" + e);
+   update_light_indicator(Http.responseText);
+ }
+
+ //return a one time light status
+ const url="http://" + location.host + "/get_status";
+ Http.open("GET", url);
+ Http.send();
+
+$(document).ready(function() {
+  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  socket.on('light status', function(msg){
+    console.log('light status:' + msg.data);
+    update_light_indicator(msg.data)
+  });
+  socket.on('number', function(msg){
+    console.log('I got a number:' + msg.data);
+  });
+});

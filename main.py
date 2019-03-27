@@ -1,15 +1,20 @@
 import piconnections
 from flask_socketio import SocketIO
-
+from time import sleep
 from flask import Flask
+from threading import Thread, Event
+
+
 app = Flask(__name__)
-socketio = SocketIO(app)
+app.config['SECRET_KEY'] = 'secret!'
+socket_io = SocketIO(app)
+event = Event()
 
 
 @app.route("/toggle_led", methods=['GET'])
 def toggle_led():
     print("on/off blinky blink!")
-    return 'success'\
+    return 'success'
 
 
 @app.route("/get_status", methods=['GET'])
@@ -23,6 +28,24 @@ def get_temp_and_humidity():
     return piconnections.read_dht11();
 
 
-if __name__ == '__main__':
+@socket_io.on('connect')
+def handle_connect():
+    print('received connect: ')
+    socket_io.emit('after connect', {'data': 'testing the dance'})
 
-    app.run(host='0.0.0.0', port=8000)
+
+def my_loop():
+    counter = 0
+    lights_on = True
+    while not event.isSet():
+        sleep(1)
+        socket_io.emit('light status', {'data': ('lights On' if lights_on else'lights Off')})
+        lights_on = not lights_on
+        socket_io.emit('current temperature', {'data': counter})
+        counter += 1
+
+
+if __name__ == '__main__':
+    thread = Thread(target=my_loop)
+    thread.start()
+    socket_io.run(app, debug=True)
