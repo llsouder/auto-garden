@@ -2,13 +2,12 @@ import piconnections
 from flask_socketio import SocketIO
 from time import sleep
 from flask import Flask
-from threading import Thread, Event
+from piconnections import RaspberryPi
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socket_io = SocketIO(app)
-event = Event()
 
 
 @app.route("/toggle_led", methods=['GET'])
@@ -46,6 +45,6 @@ def my_loop():
 
 
 if __name__ == '__main__':
-    thread = Thread(target=my_loop)
+    thread = RaspberryPi(socket_io)
     thread.start()
     socket_io.run(app, debug=True)
