@@ -17,6 +17,13 @@ function update_light_indicator(signal_text) {
     }
  }
 
+ function update_temperature(data) {
+    console.log("update temp:" + data);
+    if(document.getElementById("tempF")!=null) {
+        document.getElementById("tempF").innerHTML = data;
+    }
+ }
+
  const Http = new XMLHttpRequest();
  Http.onreadystatechange=(e)=>{
    console.log("onreadystatechange" + e);
@@ -34,7 +41,8 @@ $(document).ready(function() {
     console.log('light status:' + msg.data);
     update_light_indicator(msg.data)
   });
-  socket.on('number', function(msg){
+  socket.on('current temperature', function(msg){
     console.log('I got a number:' + msg.data);
+    update_temperature(msg.data)
   });
 });
