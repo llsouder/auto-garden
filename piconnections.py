@@ -6,8 +6,10 @@ import datetime
 # GPIO.setwarnings(False)
 # GPIO.setmode(GPIO.BCM)
 # GPIO.cleanup()
+import eventlet
 from threading import Thread, Event
-from time import sleep
+
+eventlet.monkey_patch()
 
 def read_dht11():
     return "the temperature is too cold!"
@@ -23,6 +25,7 @@ def read_dht11():
 #                + "Temperature: %d F" % F + "<br>" \
 #                + "Humidity: %d %%" % result.humidity
 
+
 class RaspberryPi(Thread):
 
     event = Event()
@@ -35,7 +38,7 @@ class RaspberryPi(Thread):
         counter = 0
         lights_on = True
         while not self.event.isSet():
-            sleep(1)
+            eventlet.sleep(1)
             self.socket_io.emit('light status', {'data': ('lights On' if lights_on else 'lights Off')})
             lights_on = not lights_on
             self.socket_io.emit('current temperature', {'data': counter})
