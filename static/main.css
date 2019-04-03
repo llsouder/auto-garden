@@ -3,6 +3,14 @@ body {
   background-color: black;
 }
 
+.data-display {
+  border-radius: 10px;
+  float: left;
+  width: 50;
+  border:2px solid green;
+  font-size: 2em;
+}
+
 .greendash {
   border-radius: 25px;
   background: #73AD21;

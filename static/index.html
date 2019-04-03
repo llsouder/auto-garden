@@ -10,11 +10,16 @@
 <h1 id="myDIV" class="greendash">
     Initializing app...
 </h1>
-<h1 id="tempF">
-    no reading
-</h1>
-<h1 id="humidity">
-    no reading
-</h1>
-<input id="toggleLed" type="button" value="Toggle LED" onclick="toggleLed();" />
+
+<div>
+    <div id="tempF" class="data-display" style="float: left;">
+        00
+    </div>
+    <div id="humidity" class="data-display">
+        01
+    </div>
+    <div style="clear: left;"></div>
+</div>
+
+<input id="toggleLed" type="button" value="Toggle LED" onclick="toggleLed();"/>
 </html>
