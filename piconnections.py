@@ -10,6 +10,12 @@ GPIO.cleanup()
 
 eventlet.monkey_patch()
 
+LED = 20
+GPIO.setup(LED, GPIO.OUT, initial=0)
+
+LIGHT_SENSOR=21
+GPIO.setup(LIGHT_SENSOR, GPIO.IN)
+
 
 def read_dht11():
     instance = dht11.DHT11(pin=6)
@@ -19,7 +25,18 @@ def read_dht11():
     return None
 
 
+def turn_on_led(on):
+    GPIO.output(LED, on)
+
+
+def get_light_status():
+    return GPIO.input(LIGHT_SENSOR)
+
+
 class RaspberryPi(Thread):
+
+
+
 
     event = Event()
     temp_f = -1
