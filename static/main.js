@@ -1,3 +1,8 @@
+function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+} //borrowed from stackoverflow
+
 function toggleLed() {
     const ledHttp = new XMLHttpRequest();
     const ledurl="http://" + location.host + "/toggle_led";
@@ -18,13 +23,13 @@ function update_light_indicator(signal_text) {
 
  function update_temperature(data) {
     if(document.getElementById("tempF")!=null) {
-        document.getElementById("tempF").innerHTML = data;
+        document.getElementById("tempF").innerHTML = round(data, 2).toFixed(2);
     }
  }
 
  function update_humidity(data) {
     if(document.getElementById("humidity")!=null) {
-        document.getElementById("humidity").innerHTML = data;
+        document.getElementById("humidity").innerHTML = round(data, 2).toFixed(2);
     }
  }
 
