@@ -44,12 +44,12 @@ def get_status():
 
 @socketio.on('connect')
 def handle_connect():
-    print('received connect: ')
     socketio.emit('after connect', {'data': 'testing the dance'})
     pi.send_temp()
     pi.send_humidity()
+    pi.send_light_status()
 
 
 if __name__ == '__main__':
     pi.start()
-    socketio.run(app, host='0.0.0.0', port=8000)
+    socketio.run(app, host='0.0.0.0', port=8000, debug=True, use_reloader=False)

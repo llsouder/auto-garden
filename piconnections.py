@@ -38,24 +38,24 @@ class RaspberryPi(Thread):
     event = Event()
     temp_f = -1
     humidity = -1
-    lights_on = True
+    light_status = False
 
     def __init__(self, consumer):
-        self.consumer = consumer
+        self.consumer = consumer  # methods that receive updates from the pi.
         super(RaspberryPi, self).__init__()
         dht11_result = read_dht11()
-        self.read_dht11(dht11_result)
+        self.update_dth11_data(dht11_result)
+        self.update_light_status()
 
     def poll_gpio(self):
         print("Starting GPIO loop...")
         while not self.event.isSet():
-            eventlet.sleep(5)
+            eventlet.sleep(10)
             dht11_result = read_dht11()
-            self.read_dht11(dht11_result)
-            self.consumer.update_light_sensor(self.lights_on)
-            self.lights_on = not self.lights_on
+            self.update_dth11_data(dht11_result)
+            self.update_light_status()
 
-    def read_dht11(self, result):
+    def update_dth11_data(self, result):
         if result is not None:
             temp, humidity = result
             self.update_temp(temp)
@@ -76,6 +76,15 @@ class RaspberryPi(Thread):
 
     def send_humidity(self):
         self.consumer.update_humidity(self.humidity)
+
+    def update_light_status(self):
+        status = get_light_status()
+        if self.light_status != status:
+            self.light_status = status
+            self.send_light_status()
+
+    def send_light_status(self):
+            self.consumer.update_light_sensor(self.light_status)
 
     def run(self):
         self.poll_gpio()
