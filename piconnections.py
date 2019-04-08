@@ -1,6 +1,8 @@
 from threading import Thread, Event
-import eventlet
+
 import RPi.GPIO as GPIO
+import eventlet
+
 import dht11
 
 # initialize GPIO
@@ -13,7 +15,7 @@ eventlet.monkey_patch()
 LED = 20
 GPIO.setup(LED, GPIO.OUT, initial=0)
 
-LIGHT_SENSOR=21
+LIGHT_SENSOR = 21
 GPIO.setup(LIGHT_SENSOR, GPIO.IN)
 
 
@@ -21,7 +23,7 @@ def read_dht11():
     instance = dht11.DHT11(pin=6)
     result = instance.read()
     if result.is_valid():
-        return result.temperature*1.8+32, result.humidity
+        return result.temperature * 1.8 + 32, result.humidity
     return None
 
 
@@ -34,7 +36,6 @@ def get_light_status():
 
 
 class RaspberryPi(Thread):
-
     event = Event()
     temp_f = -1
     humidity = -1
@@ -84,7 +85,7 @@ class RaspberryPi(Thread):
             self.send_light_status()
 
     def send_light_status(self):
-            self.consumer.update_light_sensor(self.light_status)
+        self.consumer.update_light_sensor(self.light_status)
 
     def run(self):
         self.poll_gpio()

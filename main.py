@@ -1,7 +1,8 @@
-from flask_socketio import SocketIO
 from flask import Flask
-from piconnections import RaspberryPi
+from flask_socketio import SocketIO
+
 import piconnections
+from piconnections import RaspberryPi
 
 
 class GpioInterface:
