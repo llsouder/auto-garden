@@ -4,14 +4,36 @@ from piconnections import RaspberryPi
 import piconnections
 
 
+class GpioInterface:
+
+    def __init__(self, socket_arg):
+        self.socket_io = socket_arg
+
+    def update_temp(self, temp_f):
+        self.socket_io.emit('current temp', {'data': temp_f})
+
+    def update_humidity(self, humidity):
+        self.socket_io.emit('current humidity', {'data': humidity})
+
+    def update_light_sensor(self, lights_on):
+        self.socket_io.emit('light status',
+                            {'data':
+                                 ('lights On' if lights_on else 'lights Off')})
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-pi = RaspberryPi(socketio)
+gpio_interface = GpioInterface(socketio)
+pi = RaspberryPi(gpio_interface)
+led_on = True
 
 
 @app.route("/toggle_led", methods=['GET'])
 def toggle_led():
+    global led_on
+    piconnections.turn_on_led(led_on)
+    led_on = not led_on
     return 'success'
 
 

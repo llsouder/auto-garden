@@ -35,16 +35,13 @@ def get_light_status():
 
 class RaspberryPi(Thread):
 
-
-
-
     event = Event()
     temp_f = -1
     humidity = -1
     lights_on = True
 
-    def __init__(self, web_socket):
-        self.socket_io = web_socket
+    def __init__(self, consumer):
+        self.consumer = consumer
         super(RaspberryPi, self).__init__()
         dht11_result = read_dht11()
         self.read_dht11(dht11_result)
@@ -55,9 +52,7 @@ class RaspberryPi(Thread):
             eventlet.sleep(5)
             dht11_result = read_dht11()
             self.read_dht11(dht11_result)
-            self.socket_io.emit('light status',
-                                {'data':
-                                     ('lights On' if self.lights_on else 'lights Off')})
+            self.consumer.update_light_sensor(self.lights_on)
             self.lights_on = not self.lights_on
 
     def read_dht11(self, result):
@@ -72,7 +67,7 @@ class RaspberryPi(Thread):
             self.send_temp()
 
     def send_temp(self):
-        self.socket_io.emit('current temp', {'data': self.temp_f})
+        self.consumer.update_temp(self.temp_f)
 
     def update_humidity(self, humidity):
         if self.humidity != humidity:
@@ -80,7 +75,7 @@ class RaspberryPi(Thread):
             self.send_humidity()
 
     def send_humidity(self):
-        self.socket_io.emit('current humidity', {'data': self.humidity})
+        self.consumer.update_humidity(self.humidity)
 
     def run(self):
         self.poll_gpio()
