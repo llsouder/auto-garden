@@ -102,4 +102,9 @@ K REGULATOR LDO
 F http://ww1.microchip.com/downloads/en/DeviceDoc/20005122B.pdf
 $ENDCMP
 #
+$CMP MCP3001
+D single-channel ADC
+K ADC
+$ENDCMP
+#
 #End Doc Library
