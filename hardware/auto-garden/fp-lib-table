@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name auto-garden)(type KiCad)(uri ${KIPRJMOD}/auto-garden.pretty)(options "")(descr ""))
+)

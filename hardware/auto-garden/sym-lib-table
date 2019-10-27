@@ -1,5 +1,4 @@
 (sym_lib_table
   (lib (name auto-garden-cache)(type Legacy)(uri ${KIPRJMOD}/auto-garden-cache.lib)(options "")(descr ""))
-  (lib (name auto-garden-rescue)(type Legacy)(uri ${KIPRJMOD}/auto-garden-rescue.lib)(options "")(descr ""))
   (lib (name auto-garden)(type Legacy)(uri ${KIPRJMOD}/auto-garden.lib)(options "")(descr ""))
 )
