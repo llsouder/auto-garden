@@ -1,0 +1,40 @@
+Source,C:\Users\lonni\OneDrive\Desktop\auto-garden\hardware\auto-garden\auto-garden.sch
+Kicad Rev,Eeschema (5.1.4)-1
+Generated Date,10/27/2019 5:56:46 PM
+
+Title,Auto-Garden-Top-Level
+Company,SouderFamily
+Revision,1.0
+Date Issue,2019-10-27
+
+Reference,Value,Library,Library Ref
+Q1,Q_PMOS_DGS,Device,Q_PMOS_DGS
+Q2,Q_NMOS_DGS,Device,Q_NMOS_DGS
+R4,27,Device,R
+JP1,Jumper_2_Open,Jumper,Jumper_2_Open
+R2,5k,Device,R
+Q3,Q_PMOS_DGS,Device,Q_PMOS_DGS
+Q4,Q_NMOS_DGS,Device,Q_NMOS_DGS
+R5,10,Device,R
+JP2,Jumper_2_Open,Jumper,Jumper_2_Open
+R3,5k,Device,R
+C9,0.1u,Device,C
+R1,5k,Device,R
+U2,MCP3001,auto-garden,MCP3001
+C10,0.1u,Device,C
+C11,0.001u,Device,C
+C8,0.001u,Device,C
+C6,0.1u,Device,C
+J3,Conn_01x03_Female,Connector,Conn_01x03_Female
+C7,0.001u,Device,C
+C5,0.1u,Device,C
+J2,Conn_01x06_Female,Connector,Conn_01x06_Female
+U1,AP2127R-3.3,auto-garden,AP2127R-3.3
+C3,0.1u,Device,C
+C4,0.001u,Device,C
+C1,0.1u,Device,C
+C2,0.001u,Device,C
+J1,Conn_01x02_Female,Connector,Conn_01x02_Female
+J4,Conn_01x03_Male,Connector,Conn_01x03_Male
+J6,Screw_Terminal_01x02,Connector,Screw_Terminal_01x02
+J5,Screw_Terminal_01x02,Connector,Screw_Terminal_01x02

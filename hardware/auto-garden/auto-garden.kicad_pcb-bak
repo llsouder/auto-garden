@@ -138,7 +138,7 @@
     (add_net GND)
   )
 
-  (module "auto-garden:Phoenix Contact COMBICON PTSA" (layer F.Cu) (tedit 5DBB6C9B) (tstamp 5DBB7422)
+  (module "auto-garden:Phoenix Contact COMBICON PTSA" (layer F.Cu) (tedit 5DBB6B05) (tstamp 5DBB7422)
     (at 182.245 97.155 90)
     (path /5DB70A1A)
     (fp_text reference J5 (at 4.445 3.81 180) (layer F.SilkS)
@@ -192,7 +192,7 @@
       (net 1 GND))
   )
 
-  (module "auto-garden:Phoenix Contact COMBICON PTSA" (layer F.Cu) (tedit 5DBB6C9B) (tstamp 5DB76F2B)
+  (module "auto-garden:Phoenix Contact COMBICON PTSA" (layer F.Cu) (tedit 5DBB6B05) (tstamp 5DB76F2B)
     (at 182.245 81.915 90)
     (path /5DB6AD53)
     (fp_text reference J6 (at 4.445 3.81 180) (layer F.SilkS)

@@ -138,7 +138,7 @@ $EndComp
 Wire Wire Line
 	8050 2900 8050 2750
 Text GLabel 7800 2350 0    50   Input ~ 0
-~P1
+~P5
 Wire Wire Line
 	8050 2350 7800 2350
 Connection ~ 8050 2350
@@ -342,7 +342,7 @@ Wire Wire Line
 	5550 2200 5300 2200
 Connection ~ 5300 2200
 Text GLabel 5000 2850 0    50   Input ~ 0
-P2
+~P1
 Wire Wire Line
 	5000 2850 5300 2850
 Wire Wire Line
@@ -506,11 +506,11 @@ Wire Wire Line
 	5500 4700 5500 4600
 Connection ~ 5500 4700
 Text GLabel 6300 4500 2    50   Input ~ 0
-P3_CLK
+P2_CLK
 Text GLabel 6650 4600 2    50   Input ~ 0
-P4_data
+P3_data
 Text GLabel 7050 4700 2    50   Input ~ 0
-P5_~CS
+P4_~CS
 Wire Wire Line
 	6300 4500 6100 4500
 Wire Wire Line
@@ -638,38 +638,25 @@ $EndComp
 Text GLabel 1700 2600 2    50   Input ~ 0
 ~P1
 Text GLabel 1850 2700 2    50   Input ~ 0
-P2
-Text GLabel 2000 2800 2    50   Input ~ 0
-P3_CLK
-Text GLabel 2000 2900 2    50   Input ~ 0
-P4_data
-Text GLabel 2350 3000 2    50   Input ~ 0
-P5_~CS
-Text GLabel 2650 3100 2    50   Input ~ 0
-~P6
+P2_CLK
+Text GLabel 2200 2800 2    50   Input ~ 0
+P3_data
+Text GLabel 2550 2900 2    50   Input ~ 0
+P4_~CS
+Text GLabel 2850 3000 2    50   Input ~ 0
+~P5
 Wire Wire Line
 	1700 2600 1400 2600
 Wire Wire Line
 	1400 2700 1850 2700
 Wire Wire Line
-	1400 2800 2000 2800
+	1400 2800 2200 2800
 Wire Wire Line
-	2000 2900 1400 2900
+	2550 2900 1400 2900
 Wire Wire Line
-	1400 3000 2350 3000
+	1400 3000 2850 3000
 Wire Wire Line
-	1400 3100 2650 3100
-$Comp
-L auto-garden:AP2127R-3.3 U1
-U 1 1 5DC4D600
-P 2200 1750
-F 0 "U1" H 2200 1992 50  0000 C CNN
-F 1 "AP2127R-3.3" H 2200 1901 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:SOT-89-3" H 2200 1950 50  0001 C CNN
-F 3 "https://www.diodes.com/assets/Datasheets/AP2127.pdf" H 2200 1700 50  0001 C CNN
-	1    2200 1750
-	1    0    0    -1  
-$EndComp
+	1400 3100 3000 3100
 $Comp
 L power:+5V #PWR0121
 U 1 1 5DC50761
@@ -850,4 +837,17 @@ F 3 "~" H 10300 2350 50  0001 C CNN
 	1    10300 2350
 	1    0    0    -1  
 $EndComp
+$Comp
+L auto-garden:MCP1702-3302E_TO92-3 U1
+U 1 1 5DB85411
+P 2200 1750
+F 0 "U1" H 2200 1992 50  0000 C CNN
+F 1 "MCP1702-3302E_TO92-3" H 2200 1901 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92" H 2200 1950 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20005122B.pdf" H 2200 1700 50  0001 C CNN
+	1    2200 1750
+	1    0    0    -1  
+$EndComp
+Text GLabel 3000 3100 2    50   Input ~ 0
+~P6
 $EndSCHEMATC
