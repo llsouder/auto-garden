@@ -1,0 +1,18 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"REF**";"OSHW-Logo2_7.3x6mm_SilkScreen";1;"OSHW-Logo2_7.3x6mm_SilkScreen";;;
+2;"REF**";"KiCad-Logo2_5mm_SilkScreen";1;"KiCad-Logo2_5mm_SilkScreen";;;
+3;"J5,J6";"Phoenix Contact COMBICON PTSA";2;"Screw_Terminal_01x02";;;
+4;"C1,C3,C5,C6,C9,C10";"C_Rect_L4.0mm_W2.5mm_P2.50mm";6;"0.1u";;;
+5;"C2,C4,C7,C8,C11";"C_Disc_D5.0mm_W2.5mm_P5.00mm";5;"0.001u";;;
+6;"J1";"PinHeader_1x02_P1.27mm_Vertical";1;"Conn_01x02_Female";;;
+7;"J2";"PinHeader_1x06_P1.27mm_Vertical";1;"Conn_01x06_Female";;;
+8;"J3";"PinHeader_1x03_P1.27mm_Vertical";1;"Conn_01x03_Female";;;
+9;"J4";"PinHeader_1x03_P1.27mm_Vertical";1;"Conn_01x03_Male";;;
+10;"JP1,JP2";"SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm";2;"Jumper_2_Open";;;
+11;"Q1,Q3";"TO-92";2;"Q_PMOS_DGS";;;
+12;"Q2,Q4";"TO-92";2;"Q_NMOS_DGS";;;
+13;"R1,R2,R3";"R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal";3;"5k";;;
+14;"R4";"R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal";1;"27";;;
+15;"R5";"R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal";1;"10";;;
+16;"U2";"DIP-8_W7.62mm";1;"MCP3001";;;
+17;"U1";"TO-92";1;"MCP1702-3302E_TO92-3";;;
