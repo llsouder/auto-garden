@@ -3,7 +3,7 @@
 
 ### Setup
 
-* Create virtual environment _(optional)_
+#### Create virtual environment _(optional)_
 
 ```bash
 python3 -m pip install virtualenv
@@ -23,7 +23,7 @@ Deactivate virtual environment with
 deactivate
 ```
 
-* Install WiringPi
+#### Install WiringPi
 
 ```bash
 python3 -m pip install -r requirements.txt 
