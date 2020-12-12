@@ -25,8 +25,7 @@ class GpioInterface:
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-gpio_interface = GpioInterface(socketio)
-pi = RaspberryPi(gpio_interface)
+z
 led_on = True
 
 
