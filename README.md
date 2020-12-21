@@ -33,3 +33,7 @@ python3 -m pip install -r requirements.txt
 ```bash
 flask run
 ```
+
+### Not a Pi
+
+Not a problem. remove -shunt from the RPi-Shunt directory
