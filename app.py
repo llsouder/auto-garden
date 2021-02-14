@@ -19,7 +19,7 @@ class GpioInterface:
     def update_light_sensor(self, lights_on):
         self.socket_io.emit('light status',
                             {'data':
-                                 ('lights On' if lights_on else 'lights Off')})
+                                 ('Light detected On' if lights_on else 'Light not detected Off')})
 
 
 app = Flask(__name__)
