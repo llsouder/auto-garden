@@ -31,7 +31,12 @@ python3 -m pip install -r requirements.txt
 
 ### Run
 ```bash
-flask run
+python app.py
+```
+
+### View web interface
+```
+http://<host>:8000/static/index.html
 ```
 
 ### Not a Pi
