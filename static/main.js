@@ -10,14 +10,15 @@ function toggleLed() {
     ledHttp.send();
 }
 
-function update_light_indicator(signal_text) {
+function update_light_indicator(light_on) {
     if(document.getElementById("myDIV")!=null) {
-        document.getElementById("myDIV").innerHTML = signal_text + "<br>";
-        if(signal_text.includes("On")) {
-          document.getElementById("myDIV").className = "greendash";
+        if(light_on) {
+          className = "greendash";
         } else {
-          document.getElementById("myDIV").className = "reddash";
+          className = "reddash"
         }
+        document.getElementById("myDIV").className = className;
+        document.getElementById("myDIV").innerHTML = "Light detected?<br>" + light_on + "<br>";
     }
  }
 
