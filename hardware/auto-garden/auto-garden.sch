@@ -763,7 +763,7 @@ U 1 1 5DC89E8C
 P 1200 1150
 F 0 "J1" V 1046 1198 50  0000 L CNN
 F 1 "Conn_01x02_Female" H 1000 1350 50  0000 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Horizontal" H 1200 1150 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical" H 1200 1150 50  0001 C CNN
 F 3 "~" H 1200 1150 50  0001 C CNN
 	1    1200 1150
 	-1   0    0    1   
