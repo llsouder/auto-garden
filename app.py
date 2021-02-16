@@ -4,6 +4,8 @@ from flask_socketio import SocketIO
 import piconnections
 from piconnections import RaspberryPi
 
+from sensor_data import db
+
 
 class GpioInterface:
 
@@ -23,11 +25,12 @@ class GpioInterface:
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sensor_data.db'
 socketio = SocketIO(app)
 gpio_interface = GpioInterface(socketio)
 pi = RaspberryPi(gpio_interface)
 led_on = True
-
+db.init_app(app)
 
 @app.route("/toggle_led", methods=['GET'])
 def toggle_led():
