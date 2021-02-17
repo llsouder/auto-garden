@@ -1,29 +1,4 @@
-body {
-  color: #404040;
-  background-color: black;
-}
-
-.data-display {
-  text-align: center;
-  border-radius: 10px;
-  float: left;
-  width: 90;
-  border:2px solid green;
-  font-size: 2em;
-}
-
-.greendash {
-  border-radius: 25px;
+.dashboard {
   background: #73AD21;
-  padding: 20px;
-  width: 250px;
-  height: 150px;
-}
-
-.reddash {
-  border-radius: 25px;
-  background: #AD7321;
-  padding: 20px;
-  width: 250px;
   height: 150px;
 }

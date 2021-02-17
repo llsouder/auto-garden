@@ -1,25 +1,37 @@
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="main.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
 </head>
+<body class="container bg-dark text-light">
+    
+    <section class="row d-flex flex-column justify-content-center text-center dashboard">
+        <h1 id="status">
+            Initializing app...
+        </h1>
+    </section>
+    
+    <section class="container d-flex flex-column justify-content-center my-3">
+        <div class="row">
+            <span class="col-4 text-left align-self-center">Temperature:</span>
+            <span id="tempF" class="col-8 fs-2 text-center border rounded-3">00</span>
+        </div>
+        <div class="row">
+            <span class="col-4 text-left align-self-center">Humidity:</span>
+            <span id="humidity" class="col-8 fs-2 text-center border rounded-3">01</span>
+        </div>
+    </section>
+    
+    <section class="container text-center">
+        <button id="toggleLed" class="btn-lg btn-light" onclick="toggleLed();">Toggle LED</button>
+    </section>
 
-<h1 id="myDIV" class="greendash">
-    Initializing app...
-</h1>
-
-<div>
-    <div id="tempF" class="data-display" style="float: left;">
-        00
-    </div>
-    <div id="humidity" class="data-display">
-        01
-    </div>
-    <div style="clear: left;"></div>
-</div>
-
-<input id="toggleLed" type="button" value="Toggle LED" onclick="toggleLed();"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
 </html>
