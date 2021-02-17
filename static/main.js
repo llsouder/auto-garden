@@ -11,28 +11,23 @@ function toggleLed() {
 }
 
 function update_light_indicator(light_on) {
-    if(document.getElementById("myDIV")!=null) {
-        if(light_on) {
-          className = "greendash";
-        } else {
-          className = "reddash"
-        }
-        document.getElementById("myDIV").className = className;
-        document.getElementById("myDIV").innerHTML = "Light detected?<br>" + light_on + "<br>";
+    const GREEN = "#73AD21";
+    const RED = "#AD7321";
+    if(document.getElementById("status")!=null) {
+        let background = light_on ? GREEN : RED;
+        document.getElementById("status").style.background = background;
+        document.getElementById("status").innerHTML = "Light detected?<br>" + light_on + "<br>";
     }
  }
 
- function update_temperature(data) {
-    if(document.getElementById("tempF")!=null) {
-        document.getElementById("tempF").innerHTML = round(data, 2).toFixed(2);
-    }
- }
+ function update_field(id, data) {
+  if(document.getElementById(id)!=null) {
+      document.getElementById(id).innerHTML = round(data, 2).toFixed(2);
+  }
+}
 
- function update_humidity(data) {
-    if(document.getElementById("humidity")!=null) {
-        document.getElementById("humidity").innerHTML = round(data, 2).toFixed(2);
-    }
- }
+const update_temperature = update_field.bind(null, "tempF");
+const  update_humidity = update_field.bind(null, "humidity")
 
  const Http = new XMLHttpRequest();
  Http.onreadystatechange=(e)=>{
