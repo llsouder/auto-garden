@@ -24,7 +24,7 @@ class SensorDataLogger():
 
     @staticmethod
     def __new_timer(function):
-        DELAY = 1.0
+        DELAY = 60.0
         return Timer(DELAY, function)
 
     def __reset_timer(self, function):
@@ -32,18 +32,24 @@ class SensorDataLogger():
         self.__timer.start()
 
     def __log_data(self):
-        light = False
-        humidity = 0.0
-        moisture = 0.0
-        temperature = 0.0
+        temperature, humidity, light, moisture = self.__read_sensors()
         with self.__app.app_context():
             db.session.add(SensorData(light, humidity, moisture, temperature))
             db.session.commit()
+            for datum in SensorData.query.all():
+                print(vars(datum))
         self.__reset_timer(self.__log_data)
 
-    def __init__(self, app):
+    def __init__(self, app, read_sensors):
+        '''
+        Parameters:
+            app: Flask app with a database connection
+            read_sensors: a function that returns a tuple of sensor readings
+        '''
         self.__app = app
+        self.__read_sensors = read_sensors
         self.__timer = SensorDataLogger.__new_timer(self.__log_data)
 
     def start(self):
+        '''Starts periodic logging'''
         self.__timer.start()

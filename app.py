@@ -30,11 +30,14 @@ gpio_interface = GpioInterface(socketio)
 pi = RaspberryPi(gpio_interface)
 led_on = True
 
+def read_sensors():
+    return (pi.temp_f, pi.humidity, pi.light_status, pi.moisture)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sensor_data.db'
 db.init_app(app)
 with app.app_context():
     db.create_all()
-logger = SensorDataLogger(app)
+logger = SensorDataLogger(app, read_sensors)
 
 @app.route("/toggle_led", methods=['GET'])
 def toggle_led():
