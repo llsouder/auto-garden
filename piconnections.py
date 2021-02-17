@@ -40,6 +40,7 @@ class RaspberryPi(Thread):
     temp_f = -1
     humidity = -1
     light_status = False
+    moisture = -1
 
     def __init__(self, consumer):
         self.consumer = consumer  # methods that receive updates from the pi.
