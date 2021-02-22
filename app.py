@@ -1,11 +1,12 @@
-from flask import Flask
+from flask import Flask, request
 from flask_socketio import SocketIO
 
 import piconnections
 from piconnections import RaspberryPi
+from sensor_data import SensorData, SensorDataEncoder, db, SensorDataLogger
 
-from sensor_data import db, SensorDataLogger
 from functools import partial
+import json
 
 
 class GpioInterface:
@@ -53,6 +54,12 @@ def toggle_led():
 @app.route("/get_status", methods=['GET'])
 def get_status():
     return 'success'
+
+
+@app.route("/sensor_log", methods=['GET'])
+def sensor_log():
+    ''' Returns sensor data history as list in JSON format'''
+    return json.dumps(SensorData.query.all(), cls=SensorDataEncoder)
 
 
 @socketio.on('connect')
