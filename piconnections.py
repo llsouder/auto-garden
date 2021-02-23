@@ -42,8 +42,8 @@ class RaspberryPi(Thread):
     light_status = False
     moisture = -1
 
-    def __init__(self, consumer):
-        self.consumer = consumer  # methods that receive updates from the pi.
+    def __init__(self, websocket_updates):
+        self.websocket = websocket_updates  # methods that receive updates from the pi.
         super(RaspberryPi, self).__init__()
         dht11_result = read_dht11()
         self.update_dth11_data(dht11_result)
@@ -66,18 +66,15 @@ class RaspberryPi(Thread):
     def update_temp(self, temp):
         if self.temp_f != temp:
             self.temp_f = temp
-            self.send_temp()
-
-    def send_temp(self):
-        self.consumer.update_temp(self.temp_f)
+            self.websocket.update_temp(temp)
 
     def update_humidity(self, humidity):
         if self.humidity != humidity:
             self.humidity = humidity
-            self.send_humidity()
+            self.websocket.update_humidity(humidity)
 
     def send_humidity(self):
-        self.consumer.update_humidity(self.humidity)
+        
 
     def update_light_status(self):
         status = get_light_status()
@@ -86,7 +83,7 @@ class RaspberryPi(Thread):
             self.send_light_status()
 
     def send_light_status(self):
-        self.consumer.update_light_sensor(self.light_status)
+        self.websocket.update_light_sensor(self.light_status)
 
     def run(self):
         self.poll_gpio()
