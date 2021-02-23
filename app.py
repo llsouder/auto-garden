@@ -9,7 +9,7 @@ from functools import partial
 import json
 
 
-class GpioInterface:
+class WebSocketUpdates:
 
     def __init__(self, socket_arg):
         self.socket_io = socket_arg
@@ -32,8 +32,8 @@ def read_sensors(pi):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-gpio_interface = GpioInterface(socketio)
-pi = RaspberryPi(gpio_interface)
+ws_updates = WebSocketUpdates(socketio)
+pi = RaspberryPi(ws_updates)
 led_on = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sensor_data.db'
