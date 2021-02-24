@@ -36,8 +36,8 @@ class SensorDataLogger():
         with self.__app.app_context():
             db.session.add(SensorData(light, humidity, moisture, temperature))
             db.session.commit()
-            for datum in SensorData.query.all():
-                print(vars(datum))
+            data = SensorData.query.all()
+            print("Data logged: {} {} {} {} db size: {}".format(temperature, humidity, light, moisture, len(data)))
         self.__reset_timer(self.__log_data)
 
     def __init__(self, app, read_sensors):
