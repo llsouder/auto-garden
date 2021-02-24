@@ -73,17 +73,11 @@ class RaspberryPi(Thread):
             self.humidity = humidity
             self.websocket.update_humidity(humidity)
 
-    def send_humidity(self):
-        
-
     def update_light_status(self):
         status = get_light_status()
         if self.light_status != status:
             self.light_status = status
-            self.send_light_status()
-
-    def send_light_status(self):
-        self.websocket.update_light_sensor(self.light_status)
+            self.websocket.update_light_sensor(status)
 
     def run(self):
         self.poll_gpio()
