@@ -1,7 +1,4 @@
-from threading import Thread, Event
-
 import RPi.GPIO as GPIO
-import eventlet
 
 import dht11
 
@@ -44,4 +41,4 @@ class PiGarden():
         else:
             temp=0
             humidity=0
-        return (temp, humidity, get_light_status(), 22)
+        return temp, humidity, get_light_status(), 22

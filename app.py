@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_socketio import SocketIO
 
-from piconnections import PiGarden
+from testgarden import TestGarden
+#from piconnections import PiGarden
 from websocket_updater import WebsocketUpdater
 
 from sensor_data import db, SensorDataLogger
@@ -24,14 +25,10 @@ class WebSocketUpdates:
                             {'data': lights_on})
 
 
-def read_sensors(pi):
-    return (pi.temp_f, pi.humidity, pi.light_status, pi.moisture)
-
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-garden = PiGarden()
+garden = TestGarden()
 ws_updates = WebsocketUpdater(garden, WebSocketUpdates(socketio))
 led_on = True
 
@@ -58,9 +55,6 @@ def get_status():
 @socketio.on('connect')
 def handle_connect():
     socketio.emit('after connect', {'data': 'testing the dance'})
-    pi.send_temp()
-    pi.send_humidity()
-    pi.send_light_status()
 
 
 if __name__ == '__main__':

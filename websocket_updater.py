@@ -18,6 +18,7 @@ class WebsocketUpdater(Thread):
         while not self.event.isSet():
             eventlet.sleep(10)
             temp, humidity, light, moisture = self.garden.read_sensors()
+            print("updating {} {} {} {}".format(temp, humidity, light, moisture))
             self.websocket.update_temp(temp)
             self.websocket.update_humidity(humidity)
             self.websocket.update_light_sensor(light)
