@@ -8,7 +8,6 @@ from websocket_updater import WebsocketUpdater
 from sensor_data import db, SensorDataLogger
 from functools import partial
 
-
 class WebSocketUpdates:
 
     def __init__(self, socket_arg):
@@ -51,10 +50,10 @@ def toggle_led():
 def get_status():
     return 'success'
 
-
-@socketio.on('connect')
-def handle_connect():
-    socketio.emit('after connect', {'data': 'testing the dance'})
+# example of how to handle websocket events
+# @socketio.on('connect')
+# def handle_connect():
+#     socketio.emit('connect msg', {'data': 'websocket connected'})
 
 
 if __name__ == '__main__':
