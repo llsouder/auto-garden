@@ -26,8 +26,32 @@ function update_field(id, data) {
   }
 }
 
-const update_temperature = update_field.bind(null, "tempF");
+const update_temperature = update_field.bind(null, "temp");
 const update_humidity = update_field.bind(null, "humidity")
+
+async function update_stats() {
+  function stats(arr, attribute) {
+    const attributes = arr.map(obj => obj[attribute]);
+    return {
+      min: Math.min(...attributes),
+      max: Math.max(...attributes),
+      avg: attributes.reduce((a, b) => a + b, 0) / attributes.length
+    };
+  }
+
+  function update_fields(stats, id)
+  {
+    document.getElementById("min-" + id).innerText = stats.min;
+    document.getElementById("max-" + id).innerText = stats.max;
+    document.getElementById("avg-" + id).innerText = stats.avg;
+  }
+
+  const sensorLog = await fetch('/sensor_log').then(resp => resp.json());
+  const temp_stats = stats(sensorLog, 'temperature');
+  const humidity_stats = stats(sensorLog, 'humidity');
+  update_fields(temp_stats, "temp");
+  update_fields(humidity_stats, "humidity");  
+}
 
 const Http = new XMLHttpRequest();
 Http.onreadystatechange = (e) => {
@@ -45,4 +69,5 @@ $(document).ready(function () {
   socket.on('current humidity', function (msg) {
     update_humidity(msg.data)
   });
+  update_stats();
 });
