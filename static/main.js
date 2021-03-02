@@ -22,7 +22,7 @@ function update_light_indicator(light_on) {
 
 function update_field(id, data) {
   if (document.getElementById(id) != null) {
-    document.getElementById(id).innerHTML = round(data, 2).toFixed(2);
+    document.getElementById(id).innerHTML = round(data, 1).toFixed(1);
   }
 }
 
@@ -33,9 +33,9 @@ function update_stats(sensor_log) {
   function stats(arr, attribute) {
     const attributes = arr.map(obj => obj[attribute]);
     return {
-      min: Math.min(...attributes),
-      max: Math.max(...attributes),
-      avg: attributes.reduce((a, b) => a + b, 0) / attributes.length
+      min: round(Math.min(...attributes), 1),
+      max: round(Math.max(...attributes), 1),
+      avg: round(attributes.reduce((a, b) => a + b, 0) / attributes.length, 1)
     };
   }
 
