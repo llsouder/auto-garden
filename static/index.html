@@ -18,6 +18,11 @@
     </section>
     
     <section id="stats" class="text-center my-3">
+        <div class="row text-end my-2">
+            <div class="col">Time Range:</div>
+            <input type="text" id="time-start" class="col-4 border rounded">
+            <input type="text" id="time-end" class="col-4 border rounded">
+        </div>
         <!-- TODO: Make into components -->
         <div class="row">
             <span class="col border text-end"></span>
@@ -27,14 +32,14 @@
             <span class="col-2 border">Mean</span>
         </div>
         <div class="row">
-            <span class="col border text-end">Temperature: </span>
+            <span class="col border text-end">Temperature:</span>
             <span id="temp" class="col-2 border bg-light text-dark">?</span>
             <span id="min-temp" class="col-2 border"></span>
             <span id="max-temp" class="col-2 border"></span>
             <span id="avg-temp" class="col-2 border"></span>
         </div>
         <div class="row">
-            <span class="col border text-end">Humidity: </span>
+            <span class="col border text-end">Humidity:</span>
             <span id="humidity" class="col-2 border bg-light text-dark">?</span>
             <span id="min-humidity" class="col-2 border"></span>
             <span id="max-humidity" class="col-2 border"></span>
