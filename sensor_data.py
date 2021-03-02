@@ -23,10 +23,14 @@ class SensorData(db.Model):
 
 class SensorDataEncoder(JSONEncoder):
 
+    @staticmethod
+    def time_format():
+        return '%Y-%m-%dT%H-%M-%S'
+
     def default(self, obj):
         if isinstance(obj, SensorData):
             return {
-                'time': obj.time.strftime('%H:%M:%S %m/%d/%Y'),
+                'time': obj.time.strftime(SensorDataEncoder.time_format()),
                 'light': obj.light,
                 'humidity': obj.humidity,
                 'moisture': obj.moisture,

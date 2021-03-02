@@ -7,6 +7,7 @@ from sensor_data import SensorData, SensorDataEncoder, db, SensorDataLogger
 
 from functools import partial
 import json
+from datetime import datetime
 
 
 class WebSocketUpdates:
@@ -58,8 +59,23 @@ def get_status():
 
 @app.route("/sensor_log", methods=['GET'])
 def sensor_log():
-    ''' Returns sensor data history as list in JSON format'''
-    return json.dumps(SensorData.query.all(), cls=SensorDataEncoder)
+    ''' 
+    Parameters:
+        start, end (str): Range of time to include in sensor log query
+    Returns:
+        sensor data history from <start> to <end> as list in JSON format
+    '''
+    def to_datetime(time: str) -> datetime:
+        return datetime.strptime(time, SensorDataEncoder.time_format())
+
+    res = SensorData.query
+    start = request.args.get('start')
+    if start:
+        res = res.filter(SensorData.time >= to_datetime(start))
+    end = request.args.get('end')
+    if end:
+        res = res.filter(SensorData.time <= to_datetime(end))
+    return json.dumps(res.all(), cls=SensorDataEncoder)
 
 
 @socketio.on('connect')
