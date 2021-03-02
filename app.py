@@ -1,14 +1,14 @@
 from flask import Flask, request
 from flask_socketio import SocketIO
 
-import piconnections
-from piconnections import RaspberryPi
+from testgarden import TestGarden
+#from piconnections import PiGarden
+from websocket_updater import WebsocketUpdater
 from sensor_data import SensorData, SensorDataEncoder, db, SensorDataLogger
 
 from functools import partial
 import json
 from datetime import datetime
-
 
 class WebSocketUpdates:
 
@@ -26,28 +26,24 @@ class WebSocketUpdates:
                             {'data': lights_on})
 
 
-def read_sensors(pi):
-    return (pi.temp_f, pi.humidity, pi.light_status, pi.moisture)
-
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-ws_updates = WebSocketUpdates(socketio)
-pi = RaspberryPi(ws_updates)
+garden = TestGarden()
+ws_updates = WebsocketUpdater(garden, WebSocketUpdates(socketio))
 led_on = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sensor_data.db'
 db.init_app(app)
 with app.app_context():
     db.create_all()
-logger = SensorDataLogger(app, partial(read_sensors, pi))
+logger = SensorDataLogger(app, garden.read_sensors)
 
 
 @app.route("/toggle_led", methods=['GET'])
 def toggle_led():
     global led_on
-    piconnections.turn_on_led(led_on)
+    garden.turn_on_led(led_on)
     led_on = not led_on
     return 'success'
 
@@ -56,6 +52,10 @@ def toggle_led():
 def get_status():
     return 'success'
 
+# example of how to handle websocket events
+# @socketio.on('connect')
+# def handle_connect():
+#     socketio.emit('connect msg', {'data': 'websocket connected'})
 
 @app.route("/sensor_log", methods=['GET'])
 def sensor_log():
@@ -78,16 +78,8 @@ def sensor_log():
     return json.dumps(res.all(), cls=SensorDataEncoder)
 
 
-@socketio.on('connect')
-def handle_connect():
-    socketio.emit('after connect', {'data': 'testing the dance'})
-    pi.send_temp()
-    pi.send_humidity()
-    pi.send_light_status()
-
-
 if __name__ == '__main__':
-    pi.start()
+    ws_updates.start()
     logger.start()
     socketio.run(app, host='0.0.0.0', port=8000,
                  debug=True, use_reloader=False)

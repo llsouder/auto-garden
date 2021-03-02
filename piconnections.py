@@ -1,7 +1,4 @@
-from threading import Thread, Event
-
 import RPi.GPIO as GPIO
-import eventlet
 
 import dht11
 
@@ -9,8 +6,6 @@ import dht11
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
-
-eventlet.monkey_patch()
 
 LED = 20
 GPIO.setup(LED, GPIO.OUT, initial=0)
@@ -35,55 +30,15 @@ def get_light_status():
     return GPIO.input(LIGHT_SENSOR)
 
 
-class RaspberryPi(Thread):
-    event = Event()
-    temp_f = -1
-    humidity = -1
-    light_status = False
-    moisture = -1
+class PiGarden():
+    def turn_on_led(self, on):
+        turn_on_led(on)
 
-    def __init__(self, websocket_updates):
-        self.websocket = websocket_updates  # methods that receive updates from the pi.
-        super(RaspberryPi, self).__init__()
-        dht11_result = read_dht11()
-        self.update_dth11_data(dht11_result)
-        self.update_light_status()
-
-    def poll_gpio(self):
-        print("Starting GPIO loop...")
-        while not self.event.isSet():
-            eventlet.sleep(10)
-            dht11_result = read_dht11()
-            self.update_dth11_data(dht11_result)
-            self.update_light_status()
-
-    def update_dth11_data(self, result):
+    def read_sensors(self):
+        result = read_dht11()
         if result is not None:
             temp, humidity = result
-            self.update_temp(temp)
-            self.update_humidity(humidity)
-
-    def update_temp(self, temp):
-        if self.temp_f != temp:
-            self.temp_f = temp
-            self.websocket.update_temp(temp)
-
-    def update_humidity(self, humidity):
-        if self.humidity != humidity:
-            self.humidity = humidity
-            self.websocket.update_humidity(humidity)
-
-    def send_humidity(self):
-        
-
-    def update_light_status(self):
-        status = get_light_status()
-        if self.light_status != status:
-            self.light_status = status
-            self.send_light_status()
-
-    def send_light_status(self):
-        self.websocket.update_light_sensor(self.light_status)
-
-    def run(self):
-        self.poll_gpio()
+        else:
+            temp=0
+            humidity=0
+        return temp, humidity, get_light_status(), 22
