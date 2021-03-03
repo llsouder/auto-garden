@@ -17,14 +17,33 @@
         </h1>
     </section>
     
-    <section class="container d-flex flex-column justify-content-center my-3">
+    <section id="stats" class="text-center my-3">
+        <div class="row text-end my-2">
+            <div class="col">Time Range:</div>
+            <input type="text" id="time-start" class="col-4 border rounded">
+            <input type="text" id="time-end" class="col-4 border rounded">
+        </div>
+        <!-- TODO: Make into components -->
         <div class="row">
-            <span class="col-4 text-left align-self-center">Temperature:</span>
-            <span id="tempF" class="col-8 fs-2 text-center border rounded-3">00</span>
+            <span class="col border text-end"></span>
+            <span class="col-2 border">Now</span>
+            <span class="col-2 border">Min</span>
+            <span class="col-2 border">Max</span>
+            <span class="col-2 border">Mean</span>
         </div>
         <div class="row">
-            <span class="col-4 text-left align-self-center">Humidity:</span>
-            <span id="humidity" class="col-8 fs-2 text-center border rounded-3">01</span>
+            <span class="col border text-end">Temperature:</span>
+            <span id="temp" class="col-2 border bg-light text-dark">?</span>
+            <span id="min-temp" class="col-2 border"></span>
+            <span id="max-temp" class="col-2 border"></span>
+            <span id="avg-temp" class="col-2 border"></span>
+        </div>
+        <div class="row">
+            <span class="col border text-end">Humidity:</span>
+            <span id="humidity" class="col-2 border bg-light text-dark">?</span>
+            <span id="min-humidity" class="col-2 border"></span>
+            <span id="max-humidity" class="col-2 border"></span>
+            <span id="avg-humidity" class="col-2 border"></span>
         </div>
     </section>
     

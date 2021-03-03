@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from threading import Timer
+from json import JSONEncoder
 
 db = SQLAlchemy()
 
@@ -18,6 +19,25 @@ class SensorData(db.Model):
         self.humidity = humidity
         self.moisture = moisture
         self.temperature = temperature
+
+
+class SensorDataEncoder(JSONEncoder):
+
+    @staticmethod
+    def time_format():
+        return '%Y-%m-%dT%H-%M-%S'
+
+    def default(self, obj):
+        if isinstance(obj, SensorData):
+            return {
+                'time': obj.time.strftime(SensorDataEncoder.time_format()),
+                'light': obj.light,
+                'humidity': obj.humidity,
+                'moisture': obj.moisture,
+                'temperature': obj.temperature,
+            }
+        else:
+            return super().default(obj)
 
 
 class SensorDataLogger():

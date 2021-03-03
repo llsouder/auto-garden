@@ -1,12 +1,14 @@
-from flask import Flask
+from flask import Flask, request
 from flask_socketio import SocketIO
 
 from testgarden import TestGarden
 #from piconnections import PiGarden
 from websocket_updater import WebsocketUpdater
+from sensor_data import SensorData, SensorDataEncoder, db, SensorDataLogger
 
-from sensor_data import db, SensorDataLogger
 from functools import partial
+import json
+from datetime import datetime
 
 class WebSocketUpdates:
 
@@ -54,6 +56,26 @@ def get_status():
 # @socketio.on('connect')
 # def handle_connect():
 #     socketio.emit('connect msg', {'data': 'websocket connected'})
+
+@app.route("/sensor_log", methods=['GET'])
+def sensor_log():
+    ''' 
+    Parameters:
+        start, end (str): Range of time to include in sensor log query
+    Returns:
+        sensor data history from <start> to <end> as list in JSON format
+    '''
+    def to_datetime(time: str) -> datetime:
+        return datetime.strptime(time, SensorDataEncoder.time_format())
+
+    res = SensorData.query
+    start = request.args.get('start')
+    if start:
+        res = res.filter(SensorData.time >= to_datetime(start))
+    end = request.args.get('end')
+    if end:
+        res = res.filter(SensorData.time <= to_datetime(end))
+    return json.dumps(res.all(), cls=SensorDataEncoder)
 
 
 if __name__ == '__main__':
